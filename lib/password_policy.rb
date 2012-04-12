@@ -1,5 +1,5 @@
-require "password_policy/version"
+require_relative "password_policy/version"
 
-module PasswordPolicy
+class PasswordPolicy
   # Your code goes here...
 end
