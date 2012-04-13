@@ -24,5 +24,29 @@ class PasswordPolicy
       end
     }
 
+    @rules[:min_lowercase_chars] = {
+      :value      => 0,
+      :error_msg  => 'Password must contain at least #VAL# lowercase characters',
+      :test       => proc do |password|
+        password.scan(/[a-z]/).size >= @rules[:min_lowercase_chars][:value]
+      end
+    }
+
+    @rules[:min_uppercase_chars] = {
+      :value      => 0,
+      :error_msg  => 'Password must contain at least #VAL# uppercase characters',
+      :test       => proc do |password|
+        password.scan(/[A-Z]/).size >= @rules[:min_uppercase_chars][:value]
+      end
+    }
+
+    @rules[:min_numeric_chars] = {
+      :value      => 0,
+      :error_msg  => 'Password must contain at least #VAL# numeric characters',
+      :test       => proc do |password|
+        password.scan(/[0-9]/).size >= @rules[:min_numeric_chars][:value]
+      end
+    }
+
   end
 end
