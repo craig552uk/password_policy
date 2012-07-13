@@ -57,7 +57,7 @@ class PasswordPolicy
     }
       
     @rules[:max_special_chars] = {
-      :value      => 0,
+      :value      => 64,
       :error_msg  => 'Password must contain no more than #VAL# special characters',
       :test       => proc do |password|
           password.scan(/[\W]/).size <= @rules[:max_special_chars][:value]
