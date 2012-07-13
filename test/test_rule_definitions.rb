@@ -86,20 +86,57 @@ class PasswordPolicyRulesTests < Test::Unit::TestCase
   def test_min_numeric_chars_rule
     assert pp1 = PasswordPolicy.new
     assert pp2 = PasswordPolicy.new(:min_numeric_chars => 1)
-
+    
     assert_respond_to pp1, :min_numeric_chars
     assert_respond_to pp1, :min_numeric_chars=
 
     assert_equal 0, pp1.min_numeric_chars
     assert_equal 1, pp2.min_numeric_chars
-
+    
     assert_equal false, pp2.validate('abcdefghi')
     assert_equal true,  pp2.validate('abcdefghi1')
-
+    
     assert pp1.min_numeric_chars = 3
     assert_equal 3, pp1.min_numeric_chars
-
+    
     assert_equal false, pp1.validate('abcdefghi1')
     assert_equal true,  pp1.validate('abcdefghi123')
+  end
+    
+  def test_min_special_chars_rule
+    assert pp1 = PasswordPolicy.new
+    assert pp2 = PasswordPolicy.new(:min_special_chars => 1)
+
+    assert_respond_to pp1, :min_special_chars
+    assert_respond_to pp1, :min_special_chars=
+
+    assert_equal 0, pp1.min_special_chars
+
+    assert_equal false, pp2.validate('abcdefghi')
+    assert_equal true,  pp2.validate('abcdefghi!@')
+
+    assert pp1.min_special_chars = 3
+    assert_equal 3, pp1.min_special_chars
+
+    assert_equal false, pp1.validate('abcdefghi&')
+    assert_equal true,  pp1.validate('abcdefghi!!!')
+  end
+    
+  def test_max_special_chars_rule
+    assert pp1 = PasswordPolicy.new
+    assert pp2 = PasswordPolicy.new(:max_special_chars => 1)
+
+    assert_respond_to pp1, :max_special_chars
+    assert_respond_to pp1, :max_special_chars=
+
+    assert_equal 0, pp1.max_special_chars
+    assert_equal 1, pp2.max_special_chars
+
+    assert_equal false, pp2.validate('abcdefghi&^')
+
+    assert pp1.max_special_chars = 3
+    assert_equal 3, pp1.max_special_chars
+    assert_equal false, pp1.validate('abcdefghi$@#!{')
+    assert_equal true,  pp1.validate('abcdefghi*$%')
   end
 end
