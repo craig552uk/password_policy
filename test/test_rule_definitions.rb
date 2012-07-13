@@ -111,6 +111,7 @@ class PasswordPolicyRulesTests < Test::Unit::TestCase
     assert_respond_to pp1, :min_special_chars=
 
     assert_equal 0, pp1.min_special_chars
+    assert_equal 1, pp2.min_special_chars
 
     assert_equal false, pp2.validate('abcdefghi')
     assert_equal true,  pp2.validate('abcdefghi!@')
@@ -129,13 +130,15 @@ class PasswordPolicyRulesTests < Test::Unit::TestCase
     assert_respond_to pp1, :max_special_chars
     assert_respond_to pp1, :max_special_chars=
 
-    assert_equal 0, pp1.max_special_chars
+    assert_equal 64, pp1.max_special_chars
     assert_equal 1, pp2.max_special_chars
 
     assert_equal false, pp2.validate('abcdefghi&^')
+    assert_equal true, pp2.validate('abcdefghi!')
 
     assert pp1.max_special_chars = 3
     assert_equal 3, pp1.max_special_chars
+
     assert_equal false, pp1.validate('abcdefghi$@#!{')
     assert_equal true,  pp1.validate('abcdefghi*$%')
   end
