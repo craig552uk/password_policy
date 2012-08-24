@@ -39,7 +39,7 @@ class PasswordPolicy
         password.scan(/[A-Z]/).size >= @rules[:min_uppercase_chars][:value]
       end
     }
-
+      
     @rules[:min_numeric_chars] = {
       :value      => 0,
       :error_msg  => 'Password must contain at least #VAL# numeric characters',
@@ -47,6 +47,22 @@ class PasswordPolicy
         password.scan(/[0-9]/).size >= @rules[:min_numeric_chars][:value]
       end
     }
-
+      
+    @rules[:min_special_chars] = {
+      :value      => 0,
+      :error_msg  => 'Password must contain at least #VAL# special characters',
+      :test       => proc do |password|
+        password.scan(/[\W]/).size >= @rules[:min_special_chars][:value]
+      end
+    }
+      
+    @rules[:max_special_chars] = {
+      :value      => 64,
+      :error_msg  => 'Password must contain no more than #VAL# special characters',
+      :test       => proc do |password|
+          password.scan(/[\W]/).size <= @rules[:max_special_chars][:value]
+      end
+    }
+      
   end
 end
