@@ -109,3 +109,19 @@ The minimum number of numeric characters allowed in a password
 **Identifier** `min_numeric_chars`     
 
     @policy.min_numeric_chars = 1;
+
+### Minimun Special Characters ###
+
+The minimum number of special characters allowed in a password
+
+**Identifier** `min_special_chars`     
+
+    @policy.min_special_chars = 0;
+
+### Maximum Special Characters ###
+
+The maximum number of special characters allowed in a password
+
+**Identifier** `max_special_chars`     
+
+    @policy.max_special_chars = 64;
